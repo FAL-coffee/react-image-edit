@@ -1,7 +1,7 @@
 {
   "name": "react-imageedit",
   "version": "0.1.0",
-  "description": "React component library for image editing and generation",
+  "description": "React 画像文字入れエディタ",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
