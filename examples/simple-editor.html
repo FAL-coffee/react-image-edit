@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シンプル画像エディタ - react-imageedit</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- ライブラリのビルドファイルは直接ブラウザでは使用できないため、
+       このデモでは必要なコンポーネントを直接実装します -->
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .editor-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .editor-panel {
+      flex: 1;
+      min-width: 300px;
+    }
+    .controls-panel {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .control-group {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #eee;
+    }
+    .control-group h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #666;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    button.secondary {
+      background-color: #2196F3;
+    }
+    button.secondary:hover {
+      background-color: #0b7dda;
+    }
+    button.danger {
+      background-color: #f44336;
+    }
+    button.danger:hover {
+      background-color: #d32f2f;
+    }
+    .export-button {
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 16px;
+    }
+    .preview-image {
+      max-width: 100%;
+      margin-top: 15px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>シンプル画像エディタ</h1>
+    <div id="root"></div>
+  </div>
+
+  <script type="text/babel">
+    // 画像エディタクラスの実装
+    class ImageEditor {
+      constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        if (!this.ctx) {
+          throw new Error('Failed to get canvas context');
+        }
+        this.elements = [];
+        this.nextId = 1;
+        this.redraw();
+      }
+
+      addText(textElement) {
+        const id = `text-${this.nextId++}`;
+        this.elements.push({
+          id,
+          type: 'text',
+          data: textElement
+        });
+        this.redraw();
+        return id;
+      }
+
+      addImage(src, options) {
+        const id = `image-${this.nextId++}`;
+        this.elements.push({
+          id,
+          type: 'image',
+          data: {
+            src,
+            ...options
+          }
+        });
+        this.redraw();
+        return id;
+      }
+
+      addFrame(frameElement) {
+        const id = `frame-${this.nextId++}`;
+        this.elements.push({
+          id,
+          type: 'frame',
+          data: frameElement
+        });
+        this.redraw();
+        return id;
+      }
+
+      removeElement(id) {
+        const index = this.elements.findIndex(element => element.id === id);
+        if (index === -1) {
+          return false;
+        }
+        this.elements.splice(index, 1);
+        this.redraw();
+        return true;
+      }
+
+      removeAllElements() {
+        this.elements = [];
+        this.redraw();
+      }
+
+      updateElement(id, data) {
+        const element = this.elements.find(element => element.id === id);
+        if (!element) {
+          return false;
+        }
+        element.data = { ...element.data, ...data };
+        this.redraw();
+        return true;
+      }
+
+      updateElementPosition(id, position) {
+        const element = this.elements.find(element => element.id === id);
+        if (!element) {
+          return false;
+        }
+        element.data.position = position;
+        this.redraw();
+        return true;
+      }
+
+      async redraw() {
+        // 背景をクリア
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        // 要素を描画
+        for (const element of this.elements) {
+          try {
+            if (element.type === 'image') {
+              const imageElement = element.data;
+              const img = await this.loadImage(imageElement.src);
+              this.ctx.save();
+              this.ctx.globalAlpha = imageElement.opacity;
+              
+              const position = imageElement.position || { x: this.canvas.width / 2, y: this.canvas.height / 2 };
+              const size = imageElement.size || { width: this.canvas.width, height: this.canvas.height };
+              
+              this.ctx.drawImage(
+                img,
+                position.x - size.width / 2,
+                position.y - size.height / 2,
+                size.width,
+                size.height
+              );
+              
+              this.ctx.restore();
+            } else if (element.type === 'text') {
+              const textElement = element.data;
+              this.drawText(this.ctx, textElement);
+            } else if (element.type === 'frame') {
+              const frameElement = element.data;
+              const svgString = this.generateFrameSvg(
+                frameElement,
+                this.canvas.width,
+                this.canvas.height
+              );
+              
+              const frameImg = await this.loadImage(`data:image/svg+xml,${encodeURIComponent(svgString)}`);
+              this.ctx.drawImage(frameImg, 0, 0, this.canvas.width, this.canvas.height);
+            }
+          } catch (error) {
+            console.error(`Error drawing element ${element.id}:`, error);
+          }
+        }
+      }
+
+      loadImage(src) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = (e) => reject(new Error(`Failed to load image: ${src}`));
+          img.src = src;
+        });
+      }
+
+      drawText(ctx, textElement) {
+        ctx.fillStyle = textElement.color;
+        ctx.font = `${textElement.weight} ${textElement.fontSize}px ${textElement.fontFamily}`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        const text = textElement.text;
+        const lines = text.split('\n');
+
+        const lineHeight = textElement.fontSize * 1.2;
+        const totalHeight = lines.length * lineHeight;
+        let y = textElement.position.y - (totalHeight / 2) + (lineHeight / 2);
+
+        lines.forEach(line => {
+          ctx.fillText(line, textElement.position.x, y);
+          y += lineHeight;
+        });
+      }
+
+      generateFrameSvg(frame, width, height) {
+        const borderRadius = frame.borderRadius || 20;
+        
+        let svgString = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+            <rect width="${width - 10}" height="${height - 10}" x="5" y="5" fill="none" stroke="${frame.color}" stroke-width="5" rx="${borderRadius}" ry="${borderRadius}"
+              ${frame.style === 'dashed' ? 'stroke-dasharray="20 10"' : ''}
+            />`;
+            
+        if (frame.style === 'double') {
+          svgString += `
+            <rect x="20" y="20" width="${width - 40}" height="${height - 40}" fill="none" stroke="${frame.color}" stroke-width="5" rx="${borderRadius - 10}" ry="${borderRadius - 10}" />`;
+        }
+        
+        svgString += `</svg>`;
+        
+        return svgString;
+      }
+
+      exportToDataURL(type = 'image/png', quality = 0.95) {
+        return this.canvas.toDataURL(type, quality);
+      }
+
+      getElements() {
+        return [...this.elements];
+      }
+      
+      getCanvas() {
+        return this.canvas;
+      }
+    }
+
+    // ImageEditorWithRefコンポーネントの実装
+    const ImageEditorWithRef = React.forwardRef((props, ref) => {
+      const canvasRef = React.useRef(null);
+      const [editor, setEditor] = React.useState(null);
+      const [elements, setElements] = React.useState(props.initialElements || []);
+
+      // エディタの初期化
+      React.useEffect(() => {
+        if (canvasRef.current) {
+          const newEditor = new ImageEditor(canvasRef.current);
+          setEditor(newEditor);
+          
+          // 初期要素の追加
+          if (props.initialElements) {
+            props.initialElements.forEach(element => {
+              if (element.type === 'text') {
+                newEditor.addText(element.data);
+              } else if (element.type === 'image') {
+                const imageElement = element.data;
+                newEditor.addImage(imageElement.src, {
+                  opacity: imageElement.opacity,
+                  position: imageElement.position,
+                  size: imageElement.size,
+                });
+              } else if (element.type === 'frame') {
+                newEditor.addFrame(element.data);
+              }
+            });
+          }
+        }
+        
+        return () => {
+          // クリーンアップ
+        };
+      }, [canvasRef, props.initialElements]);
+
+      // 要素が変更されたときの処理
+      React.useEffect(() => {
+        if (props.onElementsChange) {
+          props.onElementsChange(elements);
+        }
+      }, [elements, props.onElementsChange]);
+
+      // Refを通じて公開するメソッド
+      React.useImperativeHandle(ref, () => ({
+        addText: (textElement) => {
+          if (!editor) return null;
+          
+          const id = editor.addText(textElement);
+          setElements(editor.getElements());
+          return id;
+        },
+        
+        addImage: (src, options) => {
+          if (!editor) return null;
+          
+          const id = editor.addImage(src, options);
+          setElements(editor.getElements());
+          return id;
+        },
+        
+        addFrame: (frameElement) => {
+          if (!editor) return null;
+          
+          const id = editor.addFrame(frameElement);
+          setElements(editor.getElements());
+          return id;
+        },
+        
+        removeElement: (id) => {
+          if (!editor) return false;
+          
+          const result = editor.removeElement(id);
+          if (result) {
+            setElements(editor.getElements());
+          }
+          return result;
+        },
+        
+        removeAllElements: () => {
+          if (!editor) return;
+          
+          editor.removeAllElements();
+          setElements([]);
+        },
+        
+        updateElement: (id, data) => {
+          if (!editor) return false;
+          
+          const result = editor.updateElement(id, data);
+          if (result) {
+            setElements(editor.getElements());
+          }
+          return result;
+        },
+        
+        updateElementPosition: (id, position) => {
+          if (!editor) return false;
+          
+          const result = editor.updateElementPosition(id, position);
+          if (result) {
+            setElements(editor.getElements());
+          }
+          return result;
+        },
+        
+        exportToDataURL: (type = 'image/png', quality = 0.95) => {
+          if (!editor) return null;
+          
+          return editor.exportToDataURL(type, quality);
+        },
+        
+        getElements: () => {
+          return [...elements];
+        },
+        
+        getCanvas: () => {
+          if (!editor) return null;
+          return editor.getCanvas();
+        },
+      }));
+
+      return (
+        <div className={`image-editor-container ${props.className || ''}`}>
+          <canvas
+            ref={canvasRef}
+            width={props.width || 800}
+            height={props.height || 600}
+            className="image-editor-canvas"
+            style={{ border: '1px solid #ccc', maxWidth: '100%', height: 'auto' }}
+          />
+        </div>
+      );
+    });
+
+    // メインアプリケーションコンポーネント
+    const App = () => {
+      const editorRef = React.useRef(null);
+      const canvasRef = React.useRef(null);
+      const [previewUrl, setPreviewUrl] = React.useState(null);
+      const [selectedElement, setSelectedElement] = React.useState(null);
+      const [elements, setElements] = React.useState([]);
+      const [isDragging, setIsDragging] = React.useState(false);
+      const [dragStartPos, setDragStartPos] = React.useState({ x: 0, y: 0 });
+
+      // テキスト追加のハンドラー
+      const handleAddText = (textData) => {
+        if (editorRef.current) {
+          const id = editorRef.current.addText({
+            text: textData.text,
+            color: textData.color || '#000000',
+            fontSize: parseInt(textData.fontSize) || 24,
+            fontFamily: textData.fontFamily || 'Arial',
+            position: { x: 400, y: 300 },
+            weight: textData.weight || 'normal'
+          });
+          
+          if (id) {
+            setSelectedElement({ id, type: 'text' });
+          }
+        }
+      };
+
+      // 画像追加のハンドラー
+      const handleAddImage = (file) => {
+        if (!file || !editorRef.current) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          // 画像を一時的に読み込んで、アスペクト比を計算
+          const img = new Image();
+          img.onload = () => {
+            const canvas = editorRef.current.getCanvas();
+            const canvasHeight = canvas.height;
+            
+            // 画像の縦サイズをキャンバスの高さに合わせる
+            const aspectRatio = img.width / img.height;
+            const height = canvasHeight;
+            const width = height * aspectRatio;
+            
+            const id = editorRef.current.addImage(e.target.result, {
+              opacity: 1,
+              position: { x: canvas.width / 2, y: canvas.height / 2 },
+              size: { width, height }
+            });
+            
+            if (id) {
+              setSelectedElement({ id, type: 'image' });
+            }
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      };
+
+      // フレーム追加のハンドラー
+      const handleAddFrame = (frameData) => {
+        if (editorRef.current) {
+          const id = editorRef.current.addFrame({
+            color: frameData.color || '#000000',
+            style: frameData.style || 'solid',
+            borderRadius: parseInt(frameData.borderRadius) || 20
+          });
+          
+          if (id) {
+            setSelectedElement({ id, type: 'frame' });
+          }
+        }
+      };
+
+      // 要素削除のハンドラー
+      const handleRemoveElement = () => {
+        if (selectedElement && editorRef.current) {
+          editorRef.current.removeElement(selectedElement.id);
+          setSelectedElement(null);
+        }
+      };
+
+      // すべての要素を削除するハンドラー
+      const handleClearAll = () => {
+        if (editorRef.current) {
+          editorRef.current.removeAllElements();
+          setSelectedElement(null);
+        }
+      };
+
+      // エクスポートのハンドラー
+      const handleExport = () => {
+        if (editorRef.current) {
+          const dataUrl = editorRef.current.exportToDataURL();
+          setPreviewUrl(dataUrl);
+          
+          // ダウンロードリンクを作成して自動クリック
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = 'edited-image.png';
+          link.click();
+        }
+      };
+
+      // 要素が変更されたときのハンドラー
+      const handleElementsChange = (newElements) => {
+        setElements(newElements);
+      };
+      
+      // マウスダウンのハンドラー
+      const handleMouseDown = (e) => {
+        if (!editorRef.current || !selectedElement) return;
+        
+        const canvas = editorRef.current.getCanvas();
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // キャンバスの実際のサイズとスタイルサイズの比率を計算
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        // スケールを適用した座標
+        const canvasX = x * scaleX;
+        const canvasY = y * scaleY;
+        
+        // 選択された要素の位置を取得
+        const element = elements.find(el => el.id === selectedElement.id);
+        if (!element) return;
+        
+        // テキスト要素の場合のみドラッグを有効にする
+        if (element.type === 'text') {
+          const textElement = element.data;
+          const textPos = textElement.position;
+          
+          // テキスト要素の範囲内かどうかを確認
+          const textWidth = textElement.text.length * (textElement.fontSize * 0.6);
+          const textHeight = textElement.fontSize;
+          
+          if (
+            canvasX >= textPos.x - textWidth / 2 &&
+            canvasX <= textPos.x + textWidth / 2 &&
+            canvasY >= textPos.y - textHeight / 2 &&
+            canvasY <= textPos.y + textHeight / 2
+          ) {
+            setIsDragging(true);
+            setDragStartPos({ x: canvasX, y: canvasY });
+          }
+        }
+      };
+      
+      // マウス移動のハンドラー
+      const handleMouseMove = (e) => {
+        if (!isDragging || !editorRef.current || !selectedElement) return;
+        
+        const canvas = editorRef.current.getCanvas();
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // キャンバスの実際のサイズとスタイルサイズの比率を計算
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        // スケールを適用した座標
+        const canvasX = x * scaleX;
+        const canvasY = y * scaleY;
+        
+        // 移動量を計算
+        const deltaX = canvasX - dragStartPos.x;
+        const deltaY = canvasY - dragStartPos.y;
+        
+        // 選択された要素の位置を取得
+        const element = elements.find(el => el.id === selectedElement.id);
+        if (!element || element.type !== 'text') return;
+        
+        const textElement = element.data;
+        const newPosition = {
+          x: textElement.position.x + deltaX,
+          y: textElement.position.y + deltaY
+        };
+        
+        // 要素の位置を更新
+        editorRef.current.updateElementPosition(selectedElement.id, newPosition);
+        
+        // ドラッグ開始位置を更新
+        setDragStartPos({ x: canvasX, y: canvasY });
+      };
+      
+      // マウスアップのハンドラー
+      const handleMouseUp = () => {
+        setIsDragging(false);
+      };
+      
+      // editorRefが設定されたらcanvasRefを設定する
+      React.useEffect(() => {
+        if (editorRef.current) {
+          canvasRef.current = editorRef.current.getCanvas();
+        }
+      }, [editorRef.current]);
+      
+      // コンポーネントがマウントされたときにイベントリスナーを追加
+      React.useEffect(() => {
+        const canvas = canvasRef.current;
+        if (canvas) {
+          canvas.addEventListener('mousedown', handleMouseDown);
+          window.addEventListener('mousemove', handleMouseMove);
+          window.addEventListener('mouseup', handleMouseUp);
+        }
+        
+        return () => {
+          if (canvas) {
+            canvas.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+          }
+        };
+      }, [canvasRef.current, isDragging, selectedElement, elements, dragStartPos]);
+
+      return (
+        <div className="editor-container">
+          <div className="editor-panel">
+            <ImageEditorWithRef
+              ref={editorRef}
+              width={800}
+              height={600}
+              onElementsChange={handleElementsChange}
+            />
+            
+            <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
+              <button onClick={handleExport} className="export-button">
+                画像をエクスポート
+              </button>
+            </div>
+            
+            {previewUrl && (
+              <div style={{ marginTop: '20px' }}>
+                <h3>プレビュー</h3>
+                <img src={previewUrl} alt="Preview" className="preview-image" />
+              </div>
+            )}
+          </div>
+          
+          <div className="controls-panel">
+            <div className="control-group">
+              <h3>テキスト追加</h3>
+              <CustomTextInput onSubmit={handleAddText} />
+            </div>
+            
+            <div className="control-group">
+              <h3>画像アップロード</h3>
+              <CustomImageUpload onUpload={handleAddImage} />
+            </div>
+            
+            <div className="control-group">
+              <h3>フレーム追加</h3>
+              <CustomFrameSelector onSelect={handleAddFrame} />
+            </div>
+            
+            <div className="control-group">
+              <h3>要素管理</h3>
+              <button onClick={handleRemoveElement} className="danger" disabled={!selectedElement}>
+                選択した要素を削除
+              </button>
+              <button onClick={handleClearAll} className="danger" style={{ marginTop: '10px' }}>
+                すべての要素をクリア
+              </button>
+              
+              <div style={{ marginTop: '15px' }}>
+                <h4>要素リスト</h4>
+                <ul>
+                  {elements.map(element => (
+                    <li key={element.id} 
+                        onClick={() => setSelectedElement(element)}
+                        style={{ 
+                          cursor: 'pointer', 
+                          padding: '5px',
+                          backgroundColor: selectedElement && selectedElement.id === element.id ? '#e0f7fa' : 'transparent'
+                        }}>
+                      {element.type}: {element.id}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // テキスト入力コンポーネント
+    const CustomTextInput = ({ onSubmit }) => {
+      const [text, setText] = React.useState('');
+      const [color, setColor] = React.useState('#000000');
+      const [fontSize, setFontSize] = React.useState('24');
+      const [fontFamily, setFontFamily] = React.useState('Arial');
+      const [weight, setWeight] = React.useState('normal');
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (text.trim()) {
+          onSubmit({ text, color, fontSize, fontFamily, weight });
+          setText('');
+        }
+      };
+      
+      return (
+        <form onSubmit={handleSubmit}>
+          <label>テキスト:</label>
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="テキストを入力してください"
+            required
+          />
+          
+          <label>色:</label>
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+          
+          <label>フォントサイズ:</label>
+          <input
+            type="number"
+            value={fontSize}
+            onChange={(e) => setFontSize(e.target.value)}
+            min="8"
+            max="72"
+          />
+          
+          <label>フォント:</label>
+          <select value={fontFamily} onChange={(e) => setFontFamily(e.target.value)}>
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Palatino">Palatino</option>
+            <option value="Garamond">Garamond</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Impact">Impact</option>
+          </select>
+          
+          <label>太さ:</label>
+          <select value={weight} onChange={(e) => setWeight(e.target.value)}>
+            <option value="normal">Normal</option>
+            <option value="bold">Bold</option>
+            <option value="lighter">Lighter</option>
+          </select>
+          
+          <button type="submit">テキストを追加</button>
+        </form>
+      );
+    };
+
+    // 画像アップロードコンポーネント
+    const CustomImageUpload = ({ onUpload }) => {
+      const fileInputRef = React.useRef(null);
+      
+      const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          onUpload(file);
+        }
+      };
+      
+      const handleButtonClick = () => {
+        fileInputRef.current.click();
+      };
+      
+      return (
+        <div>
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            accept="image/*"
+            style={{ display: 'none' }}
+          />
+          <button type="button" onClick={handleButtonClick}>
+            画像を選択
+          </button>
+        </div>
+      );
+    };
+
+    // フレーム選択コンポーネント
+    const CustomFrameSelector = ({ onSelect }) => {
+      const [color, setColor] = React.useState('#000000');
+      const [style, setStyle] = React.useState('solid');
+      const [borderRadius, setBorderRadius] = React.useState('20');
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        onSelect({ color, style, borderRadius });
+      };
+      
+      return (
+        <form onSubmit={handleSubmit}>
+          <label>色:</label>
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+          />
+          
+          <label>スタイル:</label>
+          <select value={style} onChange={(e) => setStyle(e.target.value)}>
+            <option value="solid">実線</option>
+            <option value="dashed">破線</option>
+            <option value="double">二重線</option>
+          </select>
+          
+          <label>角の丸み:</label>
+          <input
+            type="number"
+            value={borderRadius}
+            onChange={(e) => setBorderRadius(e.target.value)}
+            min="0"
+            max="100"
+          />
+          
+          <button type="submit">フレームを追加</button>
+        </form>
+      );
+    };
+
+    // Reactアプリケーションをレンダリング
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

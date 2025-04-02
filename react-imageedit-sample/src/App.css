@@ -1,0 +1,225 @@
+:root {
+  --primary-color: #4CAF50;
+  --danger-color: #f44336;
+  --secondary-color: #2196F3;
+  --text-color: #333;
+  --border-color: #ddd;
+  --bg-color: #f5f5f5;
+  --panel-bg-color: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+main {
+  flex: 1;
+  padding: 1rem;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.editor-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.editor-panel {
+  flex: 1;
+  min-width: 300px;
+}
+
+.controls-panel {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.panel {
+  background-color: var(--panel-bg-color);
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 15px;
+}
+
+.panel h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #555;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #666;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+button.btn-danger {
+  background-color: var(--danger-color);
+}
+
+button.btn-danger:hover {
+  background-color: #d32f2f;
+}
+
+button.btn-secondary {
+  background-color: var(--secondary-color);
+}
+
+button.btn-secondary:hover {
+  background-color: #0b7dda;
+}
+
+.element-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.elements-list {
+  margin-top: 15px;
+}
+
+.elements-list h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.elements-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.elements-list li {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.elements-list li:hover {
+  background-color: #f0f0f0;
+}
+
+.elements-list li.selected {
+  background-color: #e3f2fd;
+  border-color: var(--secondary-color);
+}
+
+.preview {
+  margin-top: 15px;
+}
+
+.preview h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.preview-image {
+  max-width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.help-text {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.image-editor-canvas {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px;
+  background-color: white;
+}
+
+@media (max-width: 768px) {
+  .editor-container {
+    flex-direction: column;
+  }
+  
+  .editor-panel, .controls-panel {
+    width: 100%;
+  }
+}
