@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { ImageEditorWithRef, ImageEditorRef, EditorElement } from '~/src/index';
 import TextPanel from './components/TextPanel';
 import ImagePanel from './components/ImagePanel';

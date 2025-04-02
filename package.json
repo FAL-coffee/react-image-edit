@@ -17,7 +17,8 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "sample:dev": "cd sample-app && vite"
+    "sample:dev": "cd sample-app && vite",
+    "sample:build": "cd sample-app && vite build"
   },
   "keywords": [
     "react",
