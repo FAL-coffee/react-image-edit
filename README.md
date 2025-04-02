@@ -2,13 +2,17 @@
 
 React Image Editは、画像編集と生成のためのReactコンポーネントライブラリです。テキスト追加、画像アップロード、フレーム追加などの機能を提供します。
 
+![React Image Edit](https://github.com/FAL-coffee/react-imageedit/raw/main/docs/public/screenshot.png)
+
 ## 機能
 
-- 画像のアップロードと不透明度調整
+- 画像のアップロードと不透明度調整（縦100%表示対応）
 - テキストの追加とカスタマイズ（フォント、サイズ、色、太さ）
+- 豊富な日本語フォントサポート
 - フレームの追加（スタイル、色、角丸）
 - ドラッグ＆ドロップによる要素の配置
-- 画像としてエクスポート
+- 画像としてエクスポート（PNG/JPEG）
+- 完全にカスタマイズ可能なUI
 
 ## インストール
 
@@ -128,8 +132,7 @@ const ImageEditor = () => {
     if (editorRef.current) {
       editorRef.current.addImage(imageDataUrl, {
         opacity: opacity / 100,
-        position: { x: 400, y: 300 },
-        size: { width: 600, height: 400 }
+        // 位置とサイズは自動的に計算されます（縦100%表示）
       });
     }
   };
@@ -185,6 +188,40 @@ const FrameEditor = () => {
 };
 ```
 
+### テキストのドラッグ機能
+
+テキスト要素はキャンバス上でドラッグして移動できます。
+
+```jsx
+// テキスト要素を追加した後、キャンバス上でドラッグして位置を調整できます
+// 内部的にマウスイベントを処理しているため、特別な設定は必要ありません
+```
+
+## サンプルアプリケーション
+
+リポジトリには、React Image Editの機能を紹介するサンプルアプリケーションが含まれています。
+
+### サンプルの実行方法
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/FAL-coffee/react-imageedit.git
+cd react-imageedit
+
+# 依存関係をインストール
+npm install
+
+# ライブラリをビルド
+npm run build
+
+# サンプルアプリを起動
+cd react-imageedit-sample
+npm install
+npm run dev
+```
+
+サンプルアプリは `http://localhost:5173` で実行されます。
+
 ## API
 
 ### ImageEditorComponent
@@ -214,6 +251,7 @@ const FrameEditor = () => {
 | updateElementPosition(id: string, position: { x: number; y: number }) | 要素の位置を更新する |
 | exportToDataURL(type?: string, quality?: number) | キャンバスをデータURLとしてエクスポートする |
 | getElements() | 要素の配列を取得する |
+| getCanvas() | キャンバス要素を取得する |
 
 ### TextInput
 
@@ -275,6 +313,94 @@ const FrameEditor = () => {
 | initialFrame | FrameElement \| null | null | 初期選択フレーム |
 | className | string | '' | 追加のCSSクラス |
 
+## サポートしているフォント
+
+### 英語フォント
+- Arial
+- Verdana
+- Helvetica
+- Times New Roman
+- Courier New
+- Georgia
+- Palatino
+- Garamond
+- Comic Sans MS
+- Impact
+
+### 日本語フォント
+- 游ゴシック (Yu Gothic)
+- 游明朝 (Yu Mincho)
+- メイリオ (Meiryo)
+- MS Pゴシック (MS PGothic)
+- MS P明朝 (MS PMincho)
+- ヒラギノ角ゴ (Hiragino Kaku Gothic)
+- ヒラギノ明朝 (Hiragino Mincho)
+- 源ノ角ゴシック (Noto Sans JP)
+- 源ノ明朝 (Noto Serif JP)
+
+## 開発
+
+### 開発環境のセットアップ
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/FAL-coffee/react-imageedit.git
+cd react-imageedit
+
+# 依存関係をインストール
+npm install
+
+# 開発モードで実行
+npm run dev
+```
+
+### ビルド
+
+```bash
+npm run build
+```
+
+### テスト
+
+```bash
+npm test
+```
+
+## トラブルシューティング
+
+### 画像がアップロードできない
+
+- サポートされている画像形式（JPEG、PNG、GIF、SVG）を使用しているか確認してください
+- ファイルサイズが最大サイズ（デフォルト: 5MB）を超えていないか確認してください
+
+### テキストが表示されない
+
+- フォントが正しく指定されているか確認してください
+- テキストの色がキャンバスの背景色と同じでないか確認してください
+
+### フレームの色が変わらない
+
+- 最新バージョンを使用しているか確認してください（v0.2.0以降で修正）
+- キャッシュをクリアしてみてください
+
+## コントリビューション
+
+コントリビューションを歓迎します！以下の手順に従ってください：
+
+1. リポジトリをフォークする
+2. 機能ブランチを作成する (`git checkout -b feature/amazing-feature`)
+3. 変更をコミットする (`git commit -m 'Add some amazing feature'`)
+4. ブランチをプッシュする (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成する
+
+## ドキュメント
+
+詳細なドキュメントは [VitePress ドキュメント](https://fal-coffee.github.io/react-imageedit/) で確認できます。
+
 ## ライセンス
 
 MIT
+
+## 作者
+
+[FAL-coffee](https://github.com/FAL-coffee)
