@@ -40,3 +40,8 @@ Thumbs.db
 react-imageedit-sample/node_modules/
 react-imageedit-sample/dist/
 react-imageedit-sample/build/
+
+# VitePress generated files
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/.vitepress/.temp/
