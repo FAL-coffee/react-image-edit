@@ -2,8 +2,6 @@
 
 React Image Editは、画像編集と生成のためのReactコンポーネントライブラリです。テキスト追加、画像アップロード、フレーム追加などの機能を提供します。
 
-![React Image Edit](https://github.com/FAL-coffee/react-imageedit/raw/main/docs/public/screenshot.png)
-
 ## 機能
 
 - 画像のアップロードと不透明度調整（縦100%表示対応）
