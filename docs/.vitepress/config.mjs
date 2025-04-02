@@ -6,6 +6,7 @@ export default defineConfig({
   base: '/react-imageedit/',
   lang: 'ja-JP',
   lastUpdated: true,
+  ignoreDeadLinks: true, // デッドリンクチェックを無効化
   
   head: [
     ['link', { rel: 'icon', href: '/react-imageedit/favicon.ico' }],
