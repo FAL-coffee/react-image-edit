@@ -393,7 +393,11 @@ npm test
 
 ## ドキュメント
 
-詳細なドキュメントは [VitePress ドキュメント](https://fal-coffee.github.io/react-imageedit/) で確認できます。
+詳細なドキュメントは [オンラインドキュメント](https://react-imageedit-docs.vercel.app/) で確認できます。
+
+## オンラインデモ
+
+[オンラインデモ](https://react-imageedit-sample.vercel.app/) で実際の動作を確認できます。このデモでは、テキスト追加、画像アップロード、フレーム追加などの機能を試すことができます。
 
 ## ライセンス
 

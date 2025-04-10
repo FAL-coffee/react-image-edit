@@ -5,9 +5,6 @@ hero:
   name: "React Image Edit"
   text: "画像編集と生成のためのReactコンポーネントライブラリ"
   tagline: テキスト追加、画像アップロード、フレーム追加などの機能を提供
-  image:
-    src: /screenshot.png
-    alt: React Image Edit
   actions:
     - theme: brand
       text: はじめる
