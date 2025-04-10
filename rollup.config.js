@@ -32,8 +32,8 @@ export default [
     external: ['react', 'react-dom', '@dnd-kit/core'],
   },
   {
-    input: 'dist/index.d.ts',
-    output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+    input: 'dist/src/index.d.ts',
+    output: [{ file: 'dist/src/index.d.ts', format: 'esm' }],
     plugins: [dts()],
   },
 ];
