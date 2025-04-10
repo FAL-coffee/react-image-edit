@@ -12,6 +12,9 @@ hero:
     - theme: brand
       text: はじめる
       link: /guide/
+    - theme: brand
+      text: デモを見る
+      link: https://react-imageedit-sample.vercel.app/
     - theme: alt
       text: APIリファレンス
       link: /api/
@@ -82,10 +85,24 @@ npm install react-imageedit
 yarn add react-imageedit
 ```
 
+React 17、18、19のいずれかが必要です。
+
+```bash
+# Reactがまだインストールされていない場合
+npm install react react-dom
+# または
+yarn add react react-dom
+```
+
 ## 特徴
 
 - **軽量**: 依存関係が少なく、バンドルサイズが小さい
 - **カスタマイズ可能**: 完全にカスタマイズ可能なUIコンポーネント
 - **TypeScript対応**: 型定義が組み込まれている
 - **モダン**: 最新のReact機能（Hooks、Ref）を活用
+- **React互換性**: React 17、18、19に対応
 - **日本語サポート**: 日本語フォントと日本語UIをサポート
+
+## オンラインデモ
+
+[オンラインデモ](https://react-imageedit-sample.vercel.app/)で実際の動作を確認できます。このデモでは、テキスト追加、画像アップロード、フレーム追加などの機能を試すことができます。

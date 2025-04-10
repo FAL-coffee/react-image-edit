@@ -8,7 +8,6 @@ export default defineConfig({
   ignoreDeadLinks: true, // デッドリンクチェックを無効化
   
   head: [
-    ['link', { rel: 'icon', href: '/react-imageedit/favicon.ico' }],
     ['meta', { name: 'theme-color', content: '#4CAF50' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]

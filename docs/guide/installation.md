@@ -7,7 +7,7 @@ React Image Editは、npmまたはyarnを使用してインストールできま
 React Image Editを使用するには、以下が必要です：
 
 - Node.js 14.0.0以上
-- React 16.8.0以上（Hooks対応）
+- React 16.8.0以上、17.x、18.x、または19.x（Hooks対応）
 
 ## npmを使用したインストール
 
@@ -32,6 +32,14 @@ CDNを使用して直接スクリプトを読み込むこともできます：
 ただし、CDNを使用する場合は、Reactも同様に読み込む必要があります：
 
 ```html
+<script src="https://unpkg.com/react@19/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@19/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/react-imageedit/dist/index.js"></script>
+```
+
+または、React 17や18を使用することもできます：
+
+```html
 <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/react-imageedit/dist/index.js"></script>
@@ -49,8 +57,8 @@ import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
 
 React Image Editは、以下のピアの依存関係を持っています：
 
-- react: ^16.8.0 || ^17.0.0 || ^18.0.0
-- react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+- react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+- react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
 これらは、プロジェクトにすでにインストールされている必要があります。
 
