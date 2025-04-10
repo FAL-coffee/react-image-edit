@@ -3,7 +3,6 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'React Image Edit',
   description: '画像編集と生成のためのReactコンポーネントライブラリ',
-  base: '/react-imageedit/',
   lang: 'ja-JP',
   lastUpdated: true,
   ignoreDeadLinks: true, // デッドリンクチェックを無効化
