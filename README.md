@@ -2,6 +2,10 @@
 
 React Image Editは、画像編集と生成のためのReactコンポーネントライブラリです。テキスト追加、画像アップロード、フレーム追加などの機能を提供します。
 
+[![npm version](https://img.shields.io/npm/v/@fal-coffee/react-image-edit.svg)](https://www.npmjs.com/package/@fal-coffee/react-image-edit)
+[![npm downloads](https://img.shields.io/npm/dm/@fal-coffee/react-image-edit.svg)](https://www.npmjs.com/package/@fal-coffee/react-image-edit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## 機能
 
 - 画像のアップロードと不透明度調整（縦100%表示対応）
@@ -15,9 +19,9 @@ React Image Editは、画像編集と生成のためのReactコンポーネン�
 ## インストール
 
 ```bash
-npm install react-imageedit
+npm install @fal-coffee/react-image-edit
 # または
-yarn add react-imageedit
+yarn add @fal-coffee/react-image-edit
 ```
 
 ## 使い方
@@ -26,7 +30,7 @@ yarn add react-imageedit
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from '@fal-coffee/react-image-edit';
 
 const App = () => {
   const editorRef = useRef(null);
@@ -62,7 +66,7 @@ export default App;
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef, TextInput, TextCustomization } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef, TextInput, TextCustomization } from '@fal-coffee/react-image-edit';
 
 const TextEditor = () => {
   const editorRef = useRef(null);
@@ -120,7 +124,7 @@ const TextEditor = () => {
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef, ImageUpload } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef, ImageUpload } from '@fal-coffee/react-image-edit';
 
 const ImageEditor = () => {
   const editorRef = useRef(null);
@@ -158,7 +162,7 @@ const ImageEditor = () => {
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef, FrameSelector } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef, FrameSelector } from '@fal-coffee/react-image-edit';
 
 const FrameEditor = () => {
   const editorRef = useRef(null);

@@ -44,7 +44,7 @@ features:
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent } from 'react-imageedit';
+import { ImageEditorComponent } from '@fal-coffee/react-image-edit';
 
 function App() {
   const editorRef = useRef(null);
@@ -77,9 +77,9 @@ function App() {
 ## インストール
 
 ```bash
-npm install react-imageedit
+npm install @fal-coffee/react-image-edit
 # または
-yarn add react-imageedit
+yarn add @fal-coffee/react-image-edit
 ```
 
 React 17、18、19のいずれかが必要です。

@@ -1,5 +1,5 @@
 {
-  "name": "react-imageedit",
+  "name": "@fal-coffee/react-image-edit",
   "version": "0.1.0",
   "description": "React 画像文字入れエディタ",
   "main": "dist/index.js",

@@ -20,7 +20,7 @@ export default defineConfig({
       { text: 'ガイド', link: '/guide/' },
       { text: 'API', link: '/api/' },
       { text: '例', link: '/examples/' },
-      { text: 'GitHub', link: 'https://github.com/FAL-coffee/react-imageedit' }
+      { text: 'GitHub', link: 'https://github.com/FAL-coffee/react-image-edit' }
     ],
 
     sidebar: {
@@ -67,7 +67,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/FAL-coffee/react-imageedit' }
+      { icon: 'github', link: 'https://github.com/FAL-coffee/react-image-edit' }
     ],
 
     footer: {
@@ -80,7 +80,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/FAL-coffee/react-imageedit/edit/main/docs/:path',
+      pattern: 'https://github.com/FAL-coffee/react-image-edit/edit/main/docs/:path',
       text: 'このページを編集'
     }
   }

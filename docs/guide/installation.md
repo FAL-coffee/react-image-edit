@@ -1,6 +1,6 @@
 # インストール
 
-React Image Editは、npmまたはyarnを使用してインストールできます。
+React Image Editは、npmまたはyarnを使用してインストールできます。パッケージは[@fal-coffee/react-image-edit](https://www.npmjs.com/package/@fal-coffee/react-image-edit)として公開されています。
 
 ## 前提条件
 
@@ -12,13 +12,13 @@ React Image Editを使用するには、以下が必要です：
 ## npmを使用したインストール
 
 ```bash
-npm install react-imageedit
+npm install @fal-coffee/react-image-edit
 ```
 
 ## yarnを使用したインストール
 
 ```bash
-yarn add react-imageedit
+yarn add @fal-coffee/react-image-edit
 ```
 
 ## CDNを使用したインストール
@@ -26,7 +26,7 @@ yarn add react-imageedit
 CDNを使用して直接スクリプトを読み込むこともできます：
 
 ```html
-<script src="https://unpkg.com/react-imageedit/dist/index.js"></script>
+<script src="https://unpkg.com/@fal-coffee/react-image-edit/dist/index.js"></script>
 ```
 
 ただし、CDNを使用する場合は、Reactも同様に読み込む必要があります：
@@ -34,7 +34,7 @@ CDNを使用して直接スクリプトを読み込むこともできます：
 ```html
 <script src="https://unpkg.com/react@19/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@19/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/react-imageedit/dist/index.js"></script>
+<script src="https://unpkg.com/@fal-coffee/react-image-edit/dist/index.js"></script>
 ```
 
 または、React 17や18を使用することもできます：
@@ -42,7 +42,7 @@ CDNを使用して直接スクリプトを読み込むこともできます：
 ```html
 <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/react-imageedit/dist/index.js"></script>
+<script src="https://unpkg.com/@fal-coffee/react-image-edit/dist/index.js"></script>
 ```
 
 ## TypeScriptの型定義
@@ -50,7 +50,7 @@ CDNを使用して直接スクリプトを読み込むこともできます：
 React Image Editには、TypeScriptの型定義が組み込まれています。追加のインストールは必要ありません。
 
 ```typescript
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from '@fal-coffee/react-image-edit';
 ```
 
 ## ピアの依存関係
