@@ -64,9 +64,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   };
 
   return (
-    <div className={`mb-4 space-y-4 ${className}`}>
-      <div>
-        <label htmlFor="image-upload" className="block text-sm font-medium mb-2">
+    <div className={`panel ${className}`}>
+      <h3>画像アップロード</h3>
+      <div className="form-group">
+        <label htmlFor="image-upload">
           画像
         </label>
         <input
@@ -74,20 +75,19 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           id="image-upload"
           accept="image/*"
           onChange={handleImageUpload}
-          className="hidden"
+          style={{ display: 'none' }}
         />
         <button
           onClick={() => document.getElementById('image-upload')?.click()}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           画像をアップロード
         </button>
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+        {error && <p style={{ color: 'red', fontSize: '0.9rem', marginTop: '5px' }}>{error}</p>}
       </div>
       
-      <div>
-        <label htmlFor="image-opacity" className="block text-sm font-medium mb-2">
-          透明度: {opacity}%
+      <div className="form-group">
+        <label htmlFor="image-opacity">
+          透明度: {100 - opacity}%
         </label>
         <input
           type="range"
@@ -95,9 +95,8 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           min="0"
           max="100"
           step="1"
-          value={opacity}
-          onChange={(e) => onOpacityChange(Number(e.target.value))}
-          className="w-full"
+          value={100 - opacity}
+          onChange={(e) => onOpacityChange(100 - Number(e.target.value))}
         />
       </div>
     </div>

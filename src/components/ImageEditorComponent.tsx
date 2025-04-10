@@ -180,97 +180,6 @@ export const ImageEditorComponent: React.FC<ImageEditorComponentProps> = ({
     };
   }, [handleMouseUp, canvasRef]);
 
-  /**
-   * テキストを追加する
-   */
-  const addText = useCallback((textElement: Omit<TextElement, 'id'>): string | null => {
-    if (!editor) return null;
-    
-    const id = editor.addText(textElement);
-    setElements(editor.getElements());
-    return id;
-  }, [editor]);
-
-  /**
-   * 画像を追加する
-   */
-  const addImage = useCallback(async (src: string, options: Omit<ImageElement, 'src'>): Promise<string | null> => {
-    if (!editor) return null;
-    
-    const id = await editor.addImage(src, options);
-    setElements(editor.getElements());
-    return id;
-  }, [editor]);
-
-  /**
-   * フレームを追加する
-   */
-  const addFrame = useCallback((frameElement: FrameElement): string | null => {
-    if (!editor) return null;
-    
-    const id = editor.addFrame(frameElement);
-    setElements(editor.getElements());
-    return id;
-  }, [editor]);
-
-  /**
-   * 要素を削除する
-   */
-  const removeElement = useCallback((id: string): boolean => {
-    if (!editor) return false;
-    
-    const result = editor.removeElement(id);
-    if (result) {
-      setElements(editor.getElements());
-    }
-    return result;
-  }, [editor]);
-
-  /**
-   * すべての要素を削除する
-   */
-  const removeAllElements = useCallback(() => {
-    if (!editor) return;
-    
-    editor.removeAllElements();
-    setElements([]);
-  }, [editor]);
-
-  /**
-   * 要素を更新する
-   */
-  const updateElement = useCallback((id: string, data: Partial<TextElement | ImageElement | FrameElement>): boolean => {
-    if (!editor) return false;
-    
-    const result = editor.updateElement(id, data);
-    if (result) {
-      setElements(editor.getElements());
-    }
-    return result;
-  }, [editor]);
-
-  /**
-   * 要素の位置を更新する
-   */
-  const updateElementPosition = useCallback((id: string, position: { x: number; y: number }): boolean => {
-    if (!editor) return false;
-    
-    const result = editor.updateElementPosition(id, position);
-    if (result) {
-      setElements(editor.getElements());
-    }
-    return result;
-  }, [editor]);
-
-  /**
-   * キャンバスをデータURLとしてエクスポートする
-   */
-  const exportToDataURL = useCallback((type: string = 'image/png', quality: number = 0.95): string | null => {
-    if (!editor) return null;
-    
-    return editor.exportToDataURL(type, quality);
-  }, [editor]);
-
   return (
     <div className={`image-editor-container ${className}`}>
       <canvas
@@ -289,7 +198,7 @@ export const ImageEditorComponent: React.FC<ImageEditorComponentProps> = ({
 // 公開するAPI
 export interface ImageEditorRef {
   addText: (textElement: Omit<TextElement, 'id'>) => string | null;
-  addImage: (src: string, options: Omit<ImageElement, 'src'>) => Promise<string | null>;
+  addImage: (src: string, options?: Omit<ImageElement, 'src'>) => Promise<string | null>;
   addFrame: (frameElement: FrameElement) => string | null;
   removeElement: (id: string) => boolean;
   removeAllElements: () => void;
@@ -458,7 +367,7 @@ export const ImageEditorWithRef = React.forwardRef<ImageEditorRef, ImageEditorCo
         return id;
       },
       
-      addImage: async (src: string, options: Omit<ImageElement, 'src'>): Promise<string | null> => {
+      addImage: async (src: string, options?: Omit<ImageElement, 'src'>): Promise<string | null> => {
         if (!editor) return null;
         
         const id = await editor.addImage(src, options);

@@ -134,40 +134,35 @@ export const FrameSelector: React.FC<FrameSelectorProps> = ({
   };
 
   return (
-    <div className={`mb-4 space-y-4 ${className}`}>
-      <h3 className="font-semibold">フレームを選択</h3>
-      
-      <div className="flex flex-wrap gap-2">
-        {frames.map((frame) => (
+    <div className={`form-group ${className}`}>
+      <div className="form-group">
+        <label>フレームを選択</label>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '15px' }}>
+          {frames.map((frame) => (
+            <button
+              key={frame.name}
+              onClick={() => handleFrameSelect(frame.name)}
+              className={selectedFrame === frame.name ? 'btn-secondary' : 'btn'}
+              style={{ margin: '5px', flex: '1' }}
+            >
+              {frame.name}
+            </button>
+          ))}
+          
           <button
-            key={frame.name}
-            onClick={() => handleFrameSelect(frame.name)}
-            className={`px-4 py-2 rounded-md ${
-              selectedFrame === frame.name
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-            }`}
+            onClick={() => handleFrameSelect(null)}
+            className={selectedFrame === null ? 'btn-secondary' : 'btn'}
+            style={{ margin: '5px', flex: '1' }}
           >
-            {frame.name}
+            なし
           </button>
-        ))}
-        
-        <button
-          onClick={() => handleFrameSelect(null)}
-          className={`px-4 py-2 rounded-md ${
-            selectedFrame === null
-              ? 'bg-blue-500 text-white'
-              : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-          }`}
-        >
-          なし
-        </button>
+        </div>
       </div>
       
       {selectedFrame && (
         <>
-          <div>
-            <label htmlFor="frame-radius" className="block text-sm font-medium mb-2">
+          <div className="form-group">
+            <label htmlFor="frame-radius">
               角丸: {borderRadius}px
             </label>
             <input
@@ -177,11 +172,10 @@ export const FrameSelector: React.FC<FrameSelectorProps> = ({
               max="50"
               value={borderRadius}
               onChange={(e) => handleRadiusChange(Number(e.target.value))}
-              className="w-full"
             />
           </div>
           
-          <div className="mt-2">
+          <div style={{ marginTop: '15px', textAlign: 'center' }}>
             {selectedFrame && (
               <FramePreview
                 color={frames.find(f => f.name === selectedFrame)?.color || '#000000'}

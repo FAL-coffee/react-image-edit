@@ -29,9 +29,6 @@ export type {
   ImageEditorRef
 } from './components/ImageEditorComponent';
 
-export { default as DraggableText } from './components/DraggableText';
-export type { DraggableTextProps } from './components/DraggableText';
-
 // ユーティリティ関数のエクスポート
 export {
   loadImage,

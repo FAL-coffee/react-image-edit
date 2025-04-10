@@ -47,7 +47,7 @@ export class ImageEditor {
    * @param options オプション
    * @returns 要素ID
    */
-  async addImage(src: string, options: Omit<ImageElement, 'src'>): Promise<string> {
+  async addImage(src: string, options?: Omit<ImageElement, 'src'>): Promise<string> {
     const id = `image-${this.nextId++}`;
     
     // 画像をロードして、アスペクト比を計算
@@ -65,15 +65,15 @@ export class ImageEditor {
     const width = height * aspectRatio;
     
     // 位置とサイズを設定
-    const position = options.position || { x: this.canvas.width / 2, y: this.canvas.height / 2 };
-    const size = options.size || { width, height };
+    const position = options?.position || { x: this.canvas.width / 2, y: this.canvas.height / 2 };
+    const size = options?.size || { width, height };
     
     this.elements.push({
       id,
       type: 'image',
       data: {
         src,
-        opacity: options.opacity || 1,
+        opacity: options?.opacity || 1,
         position,
         size
       } as ImageElement

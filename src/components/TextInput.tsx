@@ -44,18 +44,27 @@ export const TextInput: React.FC<TextInputProps> = ({
   className = '',
 }) => {
   return (
-    <div className={`mb-4 ${className}`}>
-      <label htmlFor={`input-${label}`} className="block text-sm font-medium mb-2">
+    <div className={`form-group ${className}`}>
+      <label htmlFor={`input-${label}`}>
         {label}
       </label>
-      <textarea
-        id={`input-${label}`}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder || `ここに${label}を入力してください...`}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        rows={rows}
-      />
+      {rows > 1 ? (
+        <textarea
+          id={`input-${label}`}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder || `ここに${label}を入力してください...`}
+          rows={rows}
+        />
+      ) : (
+        <input
+          type="text"
+          id={`input-${label}`}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder || `ここに${label}を入力してください...`}
+        />
+      )}
     </div>
   );
 };
