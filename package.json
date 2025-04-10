@@ -13,7 +13,6 @@
     "dev": "rollup -c -w",
     "test": "jest",
     "lint": "eslint src --ext .ts,.tsx",
-    "prepare": "npm run build",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
