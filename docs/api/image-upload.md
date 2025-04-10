@@ -5,14 +5,14 @@
 ## インポート
 
 ```jsx
-import { ImageUpload } from 'react-imageedit';
+import { ImageUpload } from 'react-image-edit';
 ```
 
 ## 使用例
 
 ```jsx
 import React, { useState } from 'react';
-import { ImageUpload } from 'react-imageedit';
+import { ImageUpload } from 'react-image-edit';
 
 function App() {
   const [opacity, setOpacity] = useState(100);

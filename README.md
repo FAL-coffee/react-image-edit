@@ -207,8 +207,8 @@ const FrameEditor = () => {
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/FAL-coffee/react-imageedit.git
-cd react-imageedit
+git clone https://github.com/FAL-coffee/react-image-edit.git
+cd react-image-edit
 
 # 依存関係をインストール
 npm install
@@ -217,7 +217,7 @@ npm install
 npm run build
 
 # サンプルアプリを起動
-cd react-imageedit-sample
+cd react-image-edit-sample
 npm install
 npm run dev
 ```
@@ -346,8 +346,8 @@ npm run dev
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/FAL-coffee/react-imageedit.git
-cd react-imageedit
+git clone https://github.com/FAL-coffee/react-image-edit.git
+cd react-image-edit
 
 # 依存関係をインストール
 npm install
@@ -397,11 +397,11 @@ npm test
 
 ## ドキュメント
 
-詳細なドキュメントは [オンラインドキュメント](https://react-imageedit-docs.vercel.app/) で確認できます。
+詳細なドキュメントは [オンラインドキュメント](https://react-image-edit-docs.vercel.app/) で確認できます。
 
 ## オンラインデモ
 
-[オンラインデモ](https://react-imageedit-sample.vercel.app/) で実際の動作を確認できます。このデモでは、テキスト追加、画像アップロード、フレーム追加などの機能を試すことができます。
+[オンラインデモ](https://react-image-edit-sample.vercel.app/) で実際の動作を確認できます。このデモでは、テキスト追加、画像アップロード、フレーム追加などの機能を試すことができます。
 
 ## ライセンス
 

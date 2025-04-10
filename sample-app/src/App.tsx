@@ -221,7 +221,7 @@ function App() {
       </main>
       
       <footer>
-        <p>React Image Editor Sample - Built with react-imageedit</p>
+        <p>React Image Editor Sample - Built with react-image-edit</p>
       </footer>
     </div>
   );

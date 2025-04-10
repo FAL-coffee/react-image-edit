@@ -9,7 +9,7 @@ React Image Editは、画像編集と生成のためのReactコンポーネン�
 画像をアップロードして編集できます。画像は縦100%表示に対応し、アスペクト比を維持します。
 
 ```jsx
-import { ImageEditorComponent, ImageUpload } from 'react-imageedit';
+import { ImageEditorComponent, ImageUpload } from 'react-image-edit';
 
 // 画像アップロードの例
 const handleImageUpload = (imageDataUrl) => {
@@ -27,7 +27,7 @@ const handleImageUpload = (imageDataUrl) => {
 カスタマイズ可能なテキストを追加できます。フォント、サイズ、色、太さを調整できます。
 
 ```jsx
-import { ImageEditorComponent } from 'react-imageedit';
+import { ImageEditorComponent } from 'react-image-edit';
 
 // テキスト追加の例
 editorRef.current.addText({
@@ -45,7 +45,7 @@ editorRef.current.addText({
 様々なスタイル、色、角丸のフレームを追加できます。
 
 ```jsx
-import { ImageEditorComponent } from 'react-imageedit';
+import { ImageEditorComponent } from 'react-image-edit';
 
 // フレーム追加の例
 editorRef.current.addFrame({
@@ -69,7 +69,7 @@ editorRef.current.addFrame({
 編集した画像をPNGまたはJPEG形式でエクスポートできます。
 
 ```jsx
-import { ImageEditorComponent } from 'react-imageedit';
+import { ImageEditorComponent } from 'react-image-edit';
 
 // PNG形式でエクスポート
 const pngDataUrl = editorRef.current.exportToDataURL('image/png');

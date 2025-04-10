@@ -5,14 +5,14 @@
 ## インポート
 
 ```jsx
-import { TextCustomization } from 'react-imageedit';
+import { TextCustomization } from 'react-image-edit';
 ```
 
 ## 使用例
 
 ```jsx
 import React, { useState } from 'react';
-import { TextCustomization } from 'react-imageedit';
+import { TextCustomization } from 'react-image-edit';
 
 function App() {
   const [color, setColor] = useState('#000000');

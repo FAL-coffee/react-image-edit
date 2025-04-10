@@ -8,7 +8,7 @@
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 
 function SimpleEditor() {
   const editorRef = useRef(null);
@@ -47,7 +47,7 @@ export default SimpleEditor;
 ## ライブデモ
 
 <div class="editor-demo">
-  <iframe src="/react-imageedit/demo/simple-editor.html" width="100%" height="700" frameborder="0"></iframe>
+  <iframe src="/react-image-edit/demo/simple-editor.html" width="100%" height="700" frameborder="0"></iframe>
 </div>
 
 ## コード解説
@@ -55,7 +55,7 @@ export default SimpleEditor;
 ### コンポーネントのインポート
 
 ```jsx
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 ```
 
 必要なコンポーネントをインポートします。`ImageEditorComponent`はエディタのメインコンポーネントで、`ImageEditorRef`はTypeScriptの型定義です。

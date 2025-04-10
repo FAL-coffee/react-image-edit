@@ -7,7 +7,7 @@
 まず、必要なコンポーネントをインポートします：
 
 ```jsx
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 ```
 
 ## 基本的な実装
@@ -16,7 +16,7 @@ import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 
 function App() {
   const editorRef = useRef(null);
@@ -44,7 +44,7 @@ export default App;
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 
 function App() {
   const editorRef = useRef(null);
@@ -93,7 +93,7 @@ export default App;
 
 ```jsx
 import React, { useRef, useState } from 'react';
-import { ImageEditorComponent, ImageEditorRef, EditorElement } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef, EditorElement } from 'react-image-edit';
 
 function App() {
   const editorRef = useRef(null);
@@ -129,7 +129,7 @@ export default App;
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 
 function App() {
   const editorRef = useRef(null);
@@ -170,7 +170,7 @@ export default App;
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef, EditorElement } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef, EditorElement } from 'react-image-edit';
 
 function App() {
   const editorRef = useRef(null);
@@ -212,7 +212,7 @@ export default App;
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 import './editor-styles.css'; // カスタムCSSファイル
 
 function App() {

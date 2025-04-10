@@ -5,14 +5,14 @@
 ## インポート
 
 ```jsx
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 ```
 
 ## 使用例
 
 ```jsx
 import React, { useRef } from 'react';
-import { ImageEditorComponent, ImageEditorRef } from 'react-imageedit';
+import { ImageEditorComponent, ImageEditorRef } from 'react-image-edit';
 
 function App() {
   const editorRef = useRef(null);

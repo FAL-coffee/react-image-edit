@@ -11,13 +11,13 @@ hero:
       link: /guide/
     - theme: brand
       text: デモを見る
-      link: https://react-imageedit-sample.vercel.app/
+      link: https://react-image-edit-sample.vercel.app/
     - theme: alt
       text: APIリファレンス
       link: /api/
     - theme: alt
       text: GitHub
-      link: https://github.com/FAL-coffee/react-imageedit
+      link: https://github.com/FAL-coffee/react-image-edit
 
 features:
   - icon: 🖼️
@@ -102,4 +102,4 @@ yarn add react react-dom
 
 ## オンラインデモ
 
-[オンラインデモ](https://react-imageedit-sample.vercel.app/)で実際の動作を確認できます。このデモでは、テキスト追加、画像アップロード、フレーム追加などの機能を試すことができます。
+[オンラインデモ](https://react-image-edit-sample.vercel.app/)で実際の動作を確認できます。このデモでは、テキスト追加、画像アップロード、フレーム追加などの機能を試すことができます。

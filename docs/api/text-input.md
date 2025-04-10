@@ -5,14 +5,14 @@
 ## インポート
 
 ```jsx
-import { TextInput } from 'react-imageedit';
+import { TextInput } from 'react-image-edit';
 ```
 
 ## 使用例
 
 ```jsx
 import React, { useState } from 'react';
-import { TextInput } from 'react-imageedit';
+import { TextInput } from 'react-image-edit';
 
 function App() {
   const [text, setText] = useState('');

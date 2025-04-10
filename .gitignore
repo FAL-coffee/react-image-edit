@@ -36,11 +36,6 @@ yarn-error.log*
 ehthumbs.db
 Thumbs.db
 
-# React sample app
-react-imageedit-sample/node_modules/
-react-imageedit-sample/dist/
-react-imageedit-sample/build/
-
 # VitePress generated files
 docs/.vitepress/dist/
 docs/.vitepress/cache/

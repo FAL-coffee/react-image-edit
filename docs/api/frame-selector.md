@@ -5,14 +5,14 @@
 ## インポート
 
 ```jsx
-import { FrameSelector } from 'react-imageedit';
+import { FrameSelector } from 'react-image-edit';
 ```
 
 ## 使用例
 
 ```jsx
 import React, { useState } from 'react';
-import { FrameSelector } from 'react-imageedit';
+import { FrameSelector } from 'react-image-edit';
 
 function App() {
   const [selectedFrame, setSelectedFrame] = useState(null);
